@@ -12,6 +12,13 @@
       scrollHeight: 0,
       objs: {
         container: document.querySelector("#scroll-section-0"),
+        messageA: document.querySelector("#scroll-section-0 .main-message.a"),
+        messageB: document.querySelector("#scroll-section-0 .main-message.b"),
+        messageC: document.querySelector("#scroll-section-0 .main-message.c"),
+        messageD: document.querySelector("#scroll-section-0 .main-message.d"),
+      },
+      values: {
+        messageA_opacity: [0, 1],
       },
     },
     {
@@ -51,8 +58,49 @@
         i
       ].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
+
+    let totalScrollHeight = 0;
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      if (totalScrollHeight >= yOffset) {
+        currentScene = i;
+        break;
+      }
+    }
+    document.body.setAttribute("id", `show-scene-${currentScene}`);
   }
-  setLayout();
+
+  function calcValues(values, currentYOffset) {
+    let rv;
+
+    // 현재씬에서 스크롤된 범위를 비율로 구하기
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+    rv = (values[1] - values[0]) * scrollRatio + values[0];
+    return rv;
+  }
+
+  function playAnimation() {
+    const values = sceneInfo[currentScene].values;
+    const objs = sceneInfo[currentScene].objs;
+    const currentYOffset = yOffset - prevScrollHeight;
+
+    switch (currentScene) {
+      case 0:
+        let messageA_opacity_in = calcValues(
+          values.messageA_opacity,
+          currentYOffset
+        );
+        objs.messageA.style.opacity = messageA_opacity_in;
+
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+    }
+  }
 
   function scrollLoop() {
     prevScrollHeight = 0;
@@ -62,18 +110,20 @@
 
     if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       currentScene++;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
     if (yOffset < prevScrollHeight) {
       if (currentScene === 0) return;
       currentScene--;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
-
-    console.log(currentScene);
   }
 
   window.addEventListener("resize", setLayout);
   window.addEventListener("scroll", () => {
     yOffset = window.scrollY;
     scrollLoop();
+    playAnimation();
   });
+  window.addEventListener("DOMContentLoaded", setLayout);
 })();
