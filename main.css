@@ -209,6 +209,7 @@ p {
   }
 
   .description {
+    padding: 0;
     max-width: 1000px;
     font-size: 2rem;
   }
@@ -231,10 +232,16 @@ p {
   }
 
   .mid-message {
+    width: 1000px;
     font-size: 4vw;
+    padding: 0;
   }
 
   .canvas-caption {
+    max-width: 1000px;
+    margin: -5em auto 0;
+    padding: 0;
+    color: #888;
     font-size: 2rem;
   }
 
