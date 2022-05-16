@@ -205,6 +205,14 @@
     return rv;
   }
 
+  function checkMenu() {
+    if (yOffset > 44) {
+      document.body.classList.add("local-nav-sticky");
+    } else {
+      document.body.classList.remove("local-nav-sticky");
+    }
+  }
+
   function scrollLoop() {
     enterNewScene = false;
     prevScrollHeight = 0;
@@ -623,6 +631,7 @@
   window.addEventListener("scroll", () => {
     yOffset = window.scrollY;
     scrollLoop();
+    checkMenu();
   });
   window.addEventListener("DOMContentLoaded", setLayout);
 })();
