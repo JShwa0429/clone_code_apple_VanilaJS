@@ -78,6 +78,7 @@ p {
 .main-message {
   display: flex;
   opacity: 0;
+  top: 35vh;
   align-items: center;
   justify-content: center;
   height: 3em;
@@ -150,7 +151,6 @@ p {
 .sticky-elem {
   display: none;
   position: fixed;
-  top: 0;
   left: 0;
   width: 100%;
 }
